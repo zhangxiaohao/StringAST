@@ -1,0 +1,46 @@
+package cn.edu.fudan.baseast.test;
+
+import cn.edu.fudan.baseast.algorithm.Algorithm;
+import cn.edu.fudan.baseast.structure.Operation;
+import cn.edu.fudan.baseast.structure.OperationType;
+
+import java.util.Random;
+
+/**
+ * Created by zhangxiaohao on 16/9/18.
+ * 负责产生本地操作的线程
+ */
+public class Generator extends Thread{
+    Algorithm algorithm;
+    Integer Number;
+    private String alpha = "abcdefghijklmnopqrstuvwxyz";
+
+    public Generator(Algorithm algorithm, Integer Number) {
+        //System.out.println("Generator has been run !");
+        this.algorithm = algorithm;
+        this.Number = Number;
+    }
+
+    private void executeOperation() {
+        System.out.println("Operation has been execute!");
+        int operationType = OperationType.INSERT;
+        if(this.algorithm.effectLength > 0) {
+            operationType = Math.random() > 0.5 ? OperationType.INSERT : OperationType.DELETE;
+        }
+        int position = 0;
+        if(operationType == OperationType.INSERT) {
+            position = new Random().nextInt(this.algorithm.effectLength + 1);
+        }else if (operationType == OperationType.DELETE) {
+            position = new Random().nextInt(this.algorithm.effectLength);
+        }
+        Operation operation = new Operation(this.algorithm.timeStamp, alpha.substring(new Random().nextInt(26)), operationType, position);
+        algorithm.execute(operation);
+        algorithm.outQueue.add(operation);
+    }
+
+    public void run() {
+        for(int i=0; i<Number; i++) {
+            executeOperation();
+        }
+    }
+}

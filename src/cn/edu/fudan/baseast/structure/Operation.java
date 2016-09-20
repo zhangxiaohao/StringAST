@@ -57,5 +57,14 @@ public class Operation {
         return this.timeStamp.getTimeStampRelationship(operation.getTimeStamp());
     }
 
-
+    /**
+     * 操作打印
+     */
+    public void print() {
+        if(operationType == OperationType.INSERT) System.out.print("Insert");
+        else if(operationType == OperationType.DELETE) System.out.print("Delete");
+        else System.out.print("Undo");
+        System.out.println(" " + position + " " + operationString);
+        timeStamp.print();
+    }
 }

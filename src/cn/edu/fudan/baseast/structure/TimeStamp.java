@@ -10,9 +10,10 @@ public class TimeStamp {
     private Integer siteNumber;
     public ArrayList<Integer> timeStamp;
 
-    public TimeStamp(int siteNumber) {
+    public TimeStamp(int siteNumber, int Num) {
         this.siteNumber = siteNumber;
-        timeStamp = new ArrayList<Integer>(siteNumber);
+        timeStamp = new ArrayList<Integer>(Num);
+        while(Num -- != 0) timeStamp.add(0);
     }
 
     public Integer getSiteNumber() {
@@ -59,5 +60,16 @@ public class TimeStamp {
             if(this.getSiteNumber() < timeStamp.getSiteNumber()) return 0;
         }
         return 1;
+    }
+
+    /**
+     * 打印时间戳
+     */
+    public void print() {
+        System.out.print("( ");
+        for(int i=0; i<timeStamp.size(); i++) {
+            System.out.print(timeStamp.get(i) + " ");
+        }
+        System.out.println(")");
     }
 }

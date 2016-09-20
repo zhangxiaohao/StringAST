@@ -16,13 +16,14 @@ public class Executor extends Thread{
     }
 
     private void executeRemoteOperation() {
-        if(!algorithm.outQueue.isEmpty()) {
-            System.out.println("Check site " + algorithm.outQueue.size() + " has been execute!");
+        int queueSize = algorithm.inQueue.size();
+        if(queueSize > 0) {
+            System.out.println("Check site " + queueSize + " has been execute!");
         }
-        while(!algorithm.outQueue.isEmpty()) {
-            Operation operation = algorithm.outQueue.poll();
+        while(queueSize > 0) {
+            Operation operation = algorithm.inQueue.poll();
             if(algorithm.isCausalReady(operation) == false) {
-                algorithm.outQueue.add(operation);
+                algorithm.inQueue.add(operation);
                 continue;
             }
             algorithm.execute(operation);

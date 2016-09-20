@@ -31,9 +31,15 @@ public class Generator extends Thread{
         if(operationType == OperationType.INSERT) {
             position = new Random().nextInt(this.algorithm.effectLength + 1);
         }else if (operationType == OperationType.DELETE) {
-            position = new Random().nextInt(this.algorithm.effectLength);
+            position = new Random().nextInt(this.algorithm.effectLength) + 1;
         }
-        Operation operation = new Operation(this.algorithm.timeStamp, alpha.substring(new Random().nextInt(26)), operationType, position);
+        int pos = new Random().nextInt(26);
+        System.out.println(algorithm.timeStamp.timeStamp.size());
+        int old = algorithm.timeStamp.timeStamp.get(algorithm.timeStamp.getSiteNumber());
+        algorithm.timeStamp.timeStamp.set(algorithm.timeStamp.getSiteNumber(), old + 1);
+        Operation operation = new Operation(this.algorithm.timeStamp, alpha.substring(pos, pos + 1), operationType, position);
+        operation.setTimeStamp(algorithm.timeStamp);
+        operation.print();
         algorithm.execute(operation);
         algorithm.outQueue.add(operation);
     }

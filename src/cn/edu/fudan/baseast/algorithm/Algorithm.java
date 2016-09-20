@@ -16,12 +16,12 @@ public class Algorithm {
     public ConcurrentLinkedQueue<Operation> inQueue;
     public ConcurrentLinkedQueue<Operation> outQueue;
 
-    public Algorithm(int number) {
+    public Algorithm(int siteNum, int Num) {
         outQueue = new ConcurrentLinkedQueue<Operation>();
         inQueue = new ConcurrentLinkedQueue<Operation>();
         document = new ArrayList<Node>();
         effectLength = 0;
-        timeStamp = new TimeStamp(number);
+        timeStamp = new TimeStamp(siteNum, Num);
     }
 
     public Algorithm(ArrayList<Node> document) {
@@ -44,7 +44,10 @@ public class Algorithm {
         int i, p = -1;
         for(i=pos + 1; i<document.size(); i++) {
             Node node = document.get(i);
-            if(node.isEffect(operation)) break;
+            if(node.isEffect(operation)) {
+                p = i;
+                break;
+            }
             if(node.getInsertOperation().getOperationRelationship(operation) == OperationRelationship.CAUSAL) {
                 p = i;
                 break;
@@ -66,7 +69,11 @@ public class Algorithm {
      */
     public void execute(Operation operation) {
         int cnt = 0, pos = 0;
-        if(operation.getPosition() == 0 && operation.getOperationType() == OperationType.INSERT) rangescan(pos, operation);
+        if(operation.getPosition() == 0 && operation.getOperationType() == OperationType.INSERT) {
+            rangescan(pos - 1, operation);
+            getEffectLength();
+            return ;
+        }
         for(Node node : document) {
             if(node.isEffect(operation)) cnt ++;
             if(cnt == operation.getPosition()) {

@@ -1,14 +1,11 @@
 package cn.edu.fudan.baseast;
 
 import cn.edu.fudan.baseast.algorithm.Algorithm;
+import cn.edu.fudan.baseast.structure.Node;
 import cn.edu.fudan.baseast.test.Executor;
 import cn.edu.fudan.baseast.test.Generator;
 import cn.edu.fudan.baseast.test.Sender;
-import com.sun.org.apache.bcel.internal.generic.ALOAD;
-import com.sun.tools.javac.jvm.Gen;
-import com.sun.tools.jdi.ArrayReferenceImpl;
 
-import javax.crypto.AEADBadTagException;
 import java.util.ArrayList;
 
 /**
@@ -19,11 +16,20 @@ public class BaseASTTest {
     public static ArrayList<Generator> generators = new ArrayList<Generator>();
     public static ArrayList<Executor> executors = new ArrayList<Executor>();
     public static ArrayList<Sender> senders = new ArrayList<Sender>();
-    public static final int SITE = 1;
+    public static final int SITE = 2;
     public static final int OPNUM = 1;
 
+    public static void out() {
+        Algorithm algorithm = algorithms.get(0);
+        System.out.println(algorithm.document.size());
+        for(Node node : algorithm.document) {
+            System.out.print(node.operationString + " ");
+        }
+        System.out.println();
+    }
+
     public static void run() throws InterruptedException {
-        for(int i=0; i<SITE; i++) algorithms.add(new Algorithm(SITE));
+        for(int i=0; i<SITE; i++) algorithms.add(new Algorithm(i, SITE));
         Thread.sleep(1000);
         for(int i=0; i<SITE; i++) {
             generators.add(new Generator(algorithms.get(i), OPNUM));
@@ -34,13 +40,13 @@ public class BaseASTTest {
             executors.get(i).start();
         }
         Thread.sleep(3000);
-        for(Algorithm algorithm : algorithms) {
-            algorithm.printModel();
-        }
         for(int i=0; i<SITE; i++) {
             generators.get(i).stop();
             senders.get(i).stop();
             executors.get(i).stop();
+        }
+        for(Algorithm algorithm : algorithms) {
+            algorithm.printModel();
         }
     }
 

@@ -41,7 +41,8 @@ public class Node {
         if(operations.get(0).getOperationRelationship(operation) == OperationRelationship.CAUSAL) {
             effect = true;
         }
-        for(Operation op : operations) {
+        for(int i=1; i<operations.size(); i++) {
+            Operation op = operations.get(i);
             if(op.getOperationRelationship(operation) == OperationRelationship.CAUSAL) {
                 effect = false;
             }

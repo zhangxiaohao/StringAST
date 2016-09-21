@@ -3,6 +3,7 @@ package cn.edu.fudan.baseast.test;
 import cn.edu.fudan.baseast.algorithm.Algorithm;
 import cn.edu.fudan.baseast.structure.Operation;
 import cn.edu.fudan.baseast.structure.OperationType;
+import cn.edu.fudan.baseast.structure.TimeStamp;
 
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class Generator extends Thread{
         int old = algorithm.timeStamp.timeStamp.get(algorithm.timeStamp.getSiteNumber());
         algorithm.timeStamp.timeStamp.set(algorithm.timeStamp.getSiteNumber(), old + 1);
         Operation operation = new Operation(this.algorithm.timeStamp, alpha.substring(pos, pos + 1), operationType, position);
-        operation.setTimeStamp(algorithm.timeStamp);
+        operation.setTimeStamp(new TimeStamp(algorithm.timeStamp));
         operation.print();
         algorithm.execute(operation);
         algorithm.outQueue.add(operation);
@@ -47,6 +48,11 @@ public class Generator extends Thread{
     public void run() {
         for(int i=0; i<Number; i++) {
             executeOperation();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -16,6 +16,17 @@ public class Operation {
         this.position = position;
     }
 
+    /**
+     * 深拷贝函数
+     * @param operation
+     */
+    public Operation(Operation operation) {
+        this.timeStamp = new TimeStamp(operation.getTimeStamp());
+        this.operationString = operation.getOperationString();
+        this.operationType = operation.getOperationType();
+        this.position = operation.getPosition();
+    }
+
     public TimeStamp getTimeStamp() {
         return timeStamp;
     }

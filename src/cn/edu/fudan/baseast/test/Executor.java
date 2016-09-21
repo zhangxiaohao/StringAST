@@ -21,7 +21,7 @@ public class Executor extends Thread{
     private void executeRemoteOperation() {
         ConcurrentLinkedQueue<Operation> queue = algorithm.inQueue;
         if(queue.size() > 0) {
-            System.out.println("Check site " + queue.size() + " has been execute!");
+            System.out.println("Check site " + this.algorithm.timeStamp.getSiteNumber() + ", " + queue.size() + " operations has been execute!");
         }
         while(queue.size() > 0) {
             Operation operation = algorithm.inQueue.poll();
@@ -38,8 +38,8 @@ public class Executor extends Thread{
     public void run() {
         while(true) {
             try {
-                executeRemoteOperation();
                 Thread.sleep(1000);
+                executeRemoteOperation();
             } catch (InterruptedException e) {}
         }
     }

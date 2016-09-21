@@ -57,4 +57,12 @@ public class Node {
     public boolean isEffect() {
         return operations.size() == 1;
     }
+
+    public void print() {
+        System.out.println("------Node------");
+        for(Operation operation : operations) {
+            operation.print();
+        }
+        System.out.println("----------------");
+    }
 }

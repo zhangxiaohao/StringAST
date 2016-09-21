@@ -42,7 +42,7 @@ public class Algorithm {
      */
     private void rangescan(int pos, Operation operation) {
         int i, p = -1;
-        for(i=pos + 1; i<document.size(); i++) {
+        for(i=pos; i<document.size(); i++) {
             Node node = document.get(i);
             if(node.isEffect(operation)) {
                 p = i;
@@ -52,15 +52,18 @@ public class Algorithm {
                 p = i;
                 break;
             }else {
-                if(node.getInsertOperation().getTimeStamp().getTotalOrderRelationship(operation.getTimeStamp()) == 1) {
+                if(p == -1 && node.getInsertOperation().getTimeStamp().getTotalOrderRelationship(operation.getTimeStamp()) == 1) {
                     p = i;
-                }else if(p != -1 && node.getInsertOperation().getOperationRelationship(document.get(i).getInsertOperation()) == OperationRelationship.CAUSAL){
+                    //System.out.println("site " + this.timeStamp.getSiteNumber() + "! xx p = " + i);
+                }
+                if(p != -1 && node.getInsertOperation().getTimeStamp().getTotalOrderRelationship(operation.getTimeStamp()) == 0
+                   && node.getInsertOperation().getOperationRelationship(document.get(i).getInsertOperation()) == OperationRelationship.CAUSAL){
                     p = -1;
                 }
             }
         }
         if(p == -1) p = document.size();
-        document.add(p, new Node(operation.getOperationString(), operation));
+        document.add(p, new Node(operation.getOperationString(), new Operation(operation)));
     }
 
     /**
@@ -70,7 +73,7 @@ public class Algorithm {
     public void execute(Operation operation) {
         int cnt = 0, pos = 0;
         if(operation.getPosition() == 0 && operation.getOperationType() == OperationType.INSERT) {
-            rangescan(pos - 1, operation);
+            rangescan(pos, operation);
             getEffectLength();
             return ;
         }
@@ -78,9 +81,9 @@ public class Algorithm {
             if(node.isEffect(operation)) cnt ++;
             if(cnt == operation.getPosition()) {
                 if(operation.getOperationType() == OperationType.INSERT) {
-                    rangescan(pos, operation);
+                    rangescan(pos + 1, operation);
                 }else if(operation.getOperationType() == OperationType.DELETE) {
-                    node.addDelete(operation);
+                    node.addDelete(new Operation(operation));
                 }
                 break;
             }
@@ -105,6 +108,13 @@ public class Algorithm {
             }
         }
         return true;
+    }
+
+    public void printModelinDetail() {
+        for(Node node : document) {
+            //System.out.println("char: " + node.operationString);
+            node.print();
+        }
     }
 
     /**

@@ -1,5 +1,7 @@
 package cn.edu.fudan.baseast.structure;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,6 +16,18 @@ public class TimeStamp {
         this.siteNumber = siteNumber;
         timeStamp = new ArrayList<Integer>(Num);
         while(Num -- != 0) timeStamp.add(0);
+    }
+
+    /**
+     * 深拷贝函数
+     * @param ts
+     */
+    public TimeStamp(TimeStamp ts) {
+        this.siteNumber = ts.getSiteNumber();
+        this.timeStamp = new ArrayList<Integer>();
+        for(Integer i : ts.timeStamp) {
+            this.timeStamp.add(i);
+        }
     }
 
     public Integer getSiteNumber() {
@@ -31,7 +45,7 @@ public class TimeStamp {
      *
      */
     public int getTimeStampRelationship(TimeStamp timeStamp) {
-        for(int i=0; i<siteNumber; i++) {
+        for(int i=0; i<this.timeStamp.size(); i++) {
             if(this.timeStamp.get(i) > timeStamp.timeStamp.get(i)) return OperationRelationship.CONCURRENT;
         }
         return OperationRelationship.CAUSAL;
@@ -70,6 +84,6 @@ public class TimeStamp {
         for(int i=0; i<timeStamp.size(); i++) {
             System.out.print(timeStamp.get(i) + " ");
         }
-        System.out.println(")");
+        System.out.println(") " + siteNumber);
     }
 }

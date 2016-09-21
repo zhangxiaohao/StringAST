@@ -26,7 +26,7 @@ public class Sender extends Thread{
         if(queueSize > 0) {
             System.out.println("In site " + siteNumber + " has " + queueSize + " operations been send");
         }
-        System.out.println("size1: " + queue.size() + " " + algorithms.get(siteNumber).outQueue.size());
+        //System.out.println("size1: " + queue.size() + " " + algorithms.get(siteNumber).outQueue.size());
         while(queue.size() > 0){
             Operation operation = algorithms.get(siteNumber).outQueue.poll();
             if(operation == null) System.out.println("!!!!!!!!!!!!!!!!!!!!!!!");
@@ -34,7 +34,7 @@ public class Sender extends Thread{
                 algorithms.get(i).inQueue.add(operation);
             }
         }
-        System.out.println("size2: " + queue.size() + " " + algorithms.get(siteNumber).outQueue.size());
+        //System.out.println("size2: " + queue.size() + " " + algorithms.get(siteNumber).outQueue.size());
     }
 
     public void run() {

@@ -30,6 +30,8 @@ public class Executor extends Thread{
                 continue;
             }
             algorithm.execute(operation);
+            int old = algorithm.timeStamp.timeStamp.get(operation.getTimeStamp().getSiteNumber());
+            algorithm.timeStamp.timeStamp.set(operation.getTimeStamp().getSiteNumber(), old + 1);
         }
     }
 

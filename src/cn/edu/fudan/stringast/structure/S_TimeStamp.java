@@ -1,4 +1,4 @@
-package stringast.structure;
+package cn.edu.fudan.stringast.structure;
 
 import cn.edu.fudan.baseast.structure.OperationRelationship;
 

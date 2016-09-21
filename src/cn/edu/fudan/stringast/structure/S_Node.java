@@ -1,6 +1,5 @@
-package stringast.structure;
+package cn.edu.fudan.stringast.structure;
 
-import cn.edu.fudan.baseast.structure.Operation;
 import cn.edu.fudan.baseast.structure.OperationRelationship;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
-package stringast.structure;
+package cn.edu.fudan.stringast.structure;
 
 import cn.edu.fudan.baseast.structure.OperationType;
-import org.omg.CORBA.INTERNAL;
 
 /**
  * Created by zhangxiaohao on 2016/9/21.

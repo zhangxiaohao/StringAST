@@ -1,8 +1,8 @@
-package stringast.algorithm;
+package cn.edu.fudan.stringast.algorithm;
 
-import stringast.structure.S_Node;
-import stringast.structure.S_Operation;
-import stringast.structure.S_TimeStamp;
+import cn.edu.fudan.stringast.structure.S_Node;
+import cn.edu.fudan.stringast.structure.S_Operation;
+import cn.edu.fudan.stringast.structure.S_TimeStamp;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;

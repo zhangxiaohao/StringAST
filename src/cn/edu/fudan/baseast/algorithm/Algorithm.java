@@ -24,10 +24,21 @@ public class Algorithm {
         timeStamp = new TimeStamp(siteNum, Num);
     }
 
+    /**
+     * 运行中新加入的站点的构造函数
+     * 从其他节点复制所有信息
+     * @param document
+     */
     public Algorithm(ArrayList<Node> document) {
-        this.document = document;
-    }
+        this.document = new ArrayList<Node>();
+        for(Node node : document) {
+            this.document.add(node);
+        }
+   }
 
+    /**
+     * 更新有效节点的个数
+     */
     private void getEffectLength() {
         effectLength = 0;
         for(Node node : document) {
@@ -110,6 +121,9 @@ public class Algorithm {
         return true;
     }
 
+    /**
+     * 打印模型的详细信息
+     */
     public void printModelinDetail() {
         for(Node node : document) {
             //System.out.println("char: " + node.operationString);

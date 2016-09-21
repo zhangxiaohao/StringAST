@@ -58,6 +58,9 @@ public class Node {
         return operations.size() == 1;
     }
 
+    /**
+     * 打印节点中的操作信息
+     */
     public void print() {
         System.out.println("------Node------");
         for(Operation operation : operations) {

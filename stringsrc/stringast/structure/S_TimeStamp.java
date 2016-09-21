@@ -1,18 +1,17 @@
-package cn.edu.fudan.baseast.structure;
+package stringast.structure;
 
-import java.sql.Time;
-import java.sql.Timestamp;
+import cn.edu.fudan.baseast.structure.OperationRelationship;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
- * Created by zhangxiaohao on 16/9/14.
+ * Created by zhangxiaohao on 2016/9/21.
  */
-public class TimeStamp {
+public class S_TimeStamp {
     private Integer siteNumber;
     public ArrayList<Integer> timeStamp;
 
-    public TimeStamp(int siteNumber, int Num) {
+    public S_TimeStamp(int siteNumber, int Num) {
         this.siteNumber = siteNumber;
         timeStamp = new ArrayList<Integer>(Num);
         while(Num -- != 0) timeStamp.add(0);
@@ -22,7 +21,7 @@ public class TimeStamp {
      * 深拷贝函数
      * @param ts
      */
-    public TimeStamp(TimeStamp ts) {
+    public S_TimeStamp(S_TimeStamp ts) {
         this.siteNumber = ts.getSiteNumber();
         this.timeStamp = new ArrayList<Integer>();
         for(Integer i : ts.timeStamp) {
@@ -40,12 +39,12 @@ public class TimeStamp {
 
     /**
      * 获取操作之间的关系
-     * @param timeStamp
+     * @param s_timeStamp
      * @return CAUSAL CONCURRENT
      */
-    public int getTimeStampRelationship(TimeStamp timeStamp) {
+    public int getTimeStampRelationship(S_TimeStamp s_timeStamp) {
         for(int i=0; i<this.timeStamp.size(); i++) {
-            if(this.timeStamp.get(i) > timeStamp.timeStamp.get(i)) return OperationRelationship.CONCURRENT;
+            if(this.timeStamp.get(i) > s_timeStamp.timeStamp.get(i)) return OperationRelationship.CONCURRENT;
         }
         return OperationRelationship.CAUSAL;
     }
@@ -64,13 +63,13 @@ public class TimeStamp {
 
     /**
      * 获取时间戳之间的全序关系
-     * @param timeStamp
+     * @param s_timeStamp
      * @return 0 小于 1 大于
      */
-    public int getTotalOrderRelationship(TimeStamp timeStamp) {
-        if(this.getTotalOrder() < timeStamp.getTotalOrder()) return 0;
-        else if(this.getTotalOrder() == timeStamp.getTotalOrder()) {
-            if(this.getSiteNumber() < timeStamp.getSiteNumber()) return 0;
+    public int getTotalOrderRelationship(S_TimeStamp s_timeStamp) {
+        if(this.getTotalOrder() < s_timeStamp.getTotalOrder()) return 0;
+        else if(this.getTotalOrder() == s_timeStamp.getTotalOrder()) {
+            if(this.getSiteNumber() < s_timeStamp.getSiteNumber()) return 0;
         }
         return 1;
     }

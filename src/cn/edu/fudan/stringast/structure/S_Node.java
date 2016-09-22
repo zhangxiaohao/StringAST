@@ -89,8 +89,24 @@ public class S_Node {
         System.out.println("--------------");
     }
 
+    /**
+     * 将一个节点在position位置前分裂成两个
+     * @param position
+     * @return ret 有分裂后的两个节点组成的链表
+     */
     public ArrayList<S_Node> split(int position) {
         S_Node node = new S_Node(this.operationString, this.operations);
-        return  null;
+        node.operationString.delete(0, position);
+        for(int i=0; i<node.operations.size(); i++) {
+            node.operations.get(i).operationString.delete(0, position);
+        }
+        S_Node copy = new S_Node(this.operationString, this.operations);
+        node.operationString.delete(position, node.operationString.length());
+        for(int i=0; i<copy.operations.size(); i++) {
+            copy.operations.get(i).operationString.delete(position, node.operationString.length());
+        }
+        ArrayList<S_Node> ret = new ArrayList<S_Node>();
+        ret.add(node); ret.add(copy);
+        return ret;
     }
 }

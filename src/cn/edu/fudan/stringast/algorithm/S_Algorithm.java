@@ -59,7 +59,7 @@ public class S_Algorithm {
      * @param s_operation
      */
     public void rangescan(int pos, int shift, S_Operation s_operation) {
-        if(shift != document.get(pos).operationString.length()) {
+        if(pos >= 0 && shift != document.get(pos).operationString.length()) {
             ArrayList<S_Node> nodes = document.get(pos).split(shift);
             document.remove(pos);
             document.addAll(pos, nodes);
@@ -85,9 +85,9 @@ public class S_Algorithm {
                     p = -1;
                 }
             }
-            if(p == -1) p = document.size();
-            document.add(p, new S_Node(s_operation.getOperationString(), new S_Operation(s_operation)));
         }
+        if(p == -1) p = document.size();
+        document.add(p, new S_Node(s_operation.getOperationString(), new S_Operation(s_operation)));
     }
 
     /**
@@ -99,7 +99,7 @@ public class S_Algorithm {
      */
     public void delete(int pos, int shift, S_Operation s_operation) {
         if(shift != 1) {
-            ArrayList<S_Node> nodes = document.get(pos).split(shift);
+            ArrayList<S_Node> nodes = document.get(pos).split(shift - 1);
             document.remove(pos);
             document.addAll(pos, nodes);
             pos ++;
@@ -114,16 +114,18 @@ public class S_Algorithm {
                     ArrayList<S_Node> nodes = document.get(i).split(tpos);
                     document.remove(pos);
                     document.addAll(pos, nodes);
-                    break;
                 }
+                break;
             }
         }
+        cnt = 0;
         for(i=pos; i<document.size(); i++) {
             if(document.get(i).isEffect(s_operation) == false) continue;
             cnt += document.get(i).operationString.length();
-            if(cnt == s_operation.getLength()) break;
+            if(cnt > s_operation.getLength()) break;
             S_Operation nop = new S_Operation(s_operation);
-            nop.getOperationString().replace(0, document.get(i).operationString.length(), document.get(i).operationString.toString());
+            nop.getOperationString().replace(0, nop.getOperationString().length(), document.get(i).operationString.toString());
+            document.get(i).addDelete(nop);
         }
     }
 
@@ -134,6 +136,7 @@ public class S_Algorithm {
     public void execute(S_Operation s_operation) {
         int cnt = 0, pos = 0;
         if(s_operation.getPosition() == 0 && s_operation.getOperationType() == OperationType.INSERT) {
+            rangescan(-1, 0, s_operation);
             getEffectLength();
             return ;
         }

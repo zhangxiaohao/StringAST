@@ -24,8 +24,10 @@ public class S_Generator extends Thread{
 
     private StringBuilder getRandomString(int length) {
         StringBuilder sb = new StringBuilder();
-        int pos = new Random().nextInt(26);
-        for(int i=0; i<length; i++) sb.append(alpha.substring(pos, pos + 1));
+        for(int i=0; i<length; i++) {
+            int pos = new Random().nextInt(26);
+            sb.append(alpha.substring(pos, pos + 1));
+        }
         return sb;
     }
 
@@ -33,15 +35,15 @@ public class S_Generator extends Thread{
         System.out.println("Operation has been execute!");
         int operationType = OperationType.INSERT;
         if(this.s_algorithm.effectLength > 0) {
-            operationType = Math.random() > 0.5 ? OperationType.INSERT : OperationType.DELETE;
+            operationType = new Random().nextInt(2) + 1;
         }
         int position = 0, length = 0;
         if(operationType == OperationType.INSERT) {
             position = new Random().nextInt(this.s_algorithm.effectLength + 1);
-            length = new Random().nextInt(20);
+            length = new Random().nextInt(5) + 2;
         }else if(operationType == OperationType.DELETE) {
             position = new Random().nextInt(this.s_algorithm.effectLength) + 1;
-            length = new Random().nextInt(this.s_algorithm.effectLength);
+            length = new Random().nextInt(this.s_algorithm.effectLength - position + 1) + 1;
         }
         System.out.println(s_algorithm.s_timeStamp.timeStamp.size());
         int old = s_algorithm.s_timeStamp.timeStamp.get(s_algorithm.s_timeStamp.getSiteNumber());

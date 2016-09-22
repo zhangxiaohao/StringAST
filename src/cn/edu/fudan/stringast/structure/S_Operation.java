@@ -104,7 +104,7 @@ public class S_Operation {
         if(operationType == OperationType.INSERT) System.out.print("Insert");
         else if(operationType == OperationType.DELETE) System.out.print("Delete");
         else System.out.print("Undo");
-        System.out.println(" " + position + " " + length + " " + operationString);
+        System.out.println(" pos: " + position + " len: " + length + " str: " + operationString);
         s_timeStamp.print();
     }
 }

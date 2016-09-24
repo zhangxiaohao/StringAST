@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * Created by zhangxiaohao on 16/9/14.
  */
 public class Node {
-    public String operationString;
+    public StringBuilder operationString;
     private ArrayList<Operation> operations;
 
-    public Node(String operationString, Operation op) {
-        this.operationString = operationString;
+    public Node(StringBuilder operationString, Operation op) {
+        this.operationString = new StringBuilder(operationString);
         operations = new ArrayList<Operation>();
-        operations.add(op);
+        operations.add(new Operation(op));
     }
 
     /**
@@ -28,7 +28,7 @@ public class Node {
      * @param op
      */
     public void addDelete(Operation op) {
-        operations.add(op);
+        operations.add(new Operation(op));
     }
 
     /**

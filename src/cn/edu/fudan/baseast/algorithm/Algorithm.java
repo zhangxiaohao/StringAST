@@ -1,9 +1,9 @@
 package cn.edu.fudan.baseast.algorithm;
 
 import cn.edu.fudan.baseast.structure.*;
+import cn.edu.fudan.stringast.Timer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -15,6 +15,7 @@ public class Algorithm {
     public ArrayList<Node> document;
     public ConcurrentLinkedQueue<Operation> inQueue;
     public ConcurrentLinkedQueue<Operation> outQueue;
+    public long timeSpend;
 
     public Algorithm(int siteNum, int Num) {
         outQueue = new ConcurrentLinkedQueue<Operation>();
@@ -22,6 +23,7 @@ public class Algorithm {
         document = new ArrayList<Node>();
         effectLength = 0;
         timeStamp = new TimeStamp(siteNum, Num);
+        timeSpend = 0;
     }
 
     /**
@@ -82,6 +84,7 @@ public class Algorithm {
      * @param operation
      */
     public void execute(Operation operation) {
+        long start = Timer.now();
         int cnt = 0, pos = 0;
         if(operation.getPosition() == 0 && operation.getOperationType() == OperationType.INSERT) {
             rangescan(pos, operation);
@@ -101,6 +104,7 @@ public class Algorithm {
             pos ++;
         }
         getEffectLength();
+        timeSpend += Timer.now() - start;
     }
 
     /**

@@ -5,11 +5,11 @@ package cn.edu.fudan.baseast.structure;
  */
 public class Operation {
     TimeStamp timeStamp;
-    String operationString;
+    StringBuilder operationString;
     Integer operationType;
     Integer position;
 
-    public Operation(TimeStamp timeStamp, String operationString, Integer operationType, Integer position) {
+    public Operation(TimeStamp timeStamp, StringBuilder operationString, Integer operationType, Integer position) {
         this.timeStamp = timeStamp;
         this.operationString = operationString;
         this.operationType = operationType;
@@ -22,7 +22,7 @@ public class Operation {
      */
     public Operation(Operation operation) {
         this.timeStamp = new TimeStamp(operation.getTimeStamp());
-        this.operationString = operation.getOperationString();
+        this.operationString = new StringBuilder(operation.getOperationString());
         this.operationType = operation.getOperationType();
         this.position = operation.getPosition();
     }
@@ -35,11 +35,11 @@ public class Operation {
         this.timeStamp = timeStamp;
     }
 
-    public String getOperationString() {
+    public StringBuilder getOperationString() {
         return operationString;
     }
 
-    public void setOperationString(String operationString) {
+    public void setOperationString(StringBuilder operationString) {
         this.operationString = operationString;
     }
 

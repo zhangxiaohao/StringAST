@@ -16,8 +16,8 @@ public class BaseASTTest {
     public static ArrayList<Generator> generators = new ArrayList<Generator>();
     public static ArrayList<Executor> executors = new ArrayList<Executor>();
     public static ArrayList<Sender> senders = new ArrayList<Sender>();
-    public static final int SITE = 20;
-    public static final int OPNUM = 10;
+    public static final int SITE = 100;
+    public static final int OPNUM = 175;
 
     public static void out() {
         Algorithm algorithm = algorithms.get(0);
@@ -29,6 +29,7 @@ public class BaseASTTest {
     }
 
     public static void run() throws InterruptedException {
+        Thread.sleep(5000);
         for(int i=0; i<SITE; i++) algorithms.add(new Algorithm(i, SITE));
         Thread.sleep(1000);
         for(int i=0; i<SITE; i++) {
@@ -39,17 +40,20 @@ public class BaseASTTest {
             executors.add(new Executor(algorithms.get(i)));
             executors.get(i).start();
         }
-        Thread.sleep(3000);
+        Thread.sleep(10000);
         for(int i=0; i<SITE; i++) {
             generators.get(i).stop();
             senders.get(i).stop();
             executors.get(i).stop();
         }
+        long sum = 0;
         for(Algorithm algorithm : algorithms) {
-            algorithm.printModel();
+//            algorithm.printModel();
 //            algorithm.printModelinDetail();
 //            System.out.println("/n-----------------------------/n");
+            sum += algorithm.timeSpend;
         }
+        System.out.println(sum / SITE);
     }
 
     public static void main(String [] args) {

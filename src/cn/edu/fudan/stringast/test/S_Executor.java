@@ -1,6 +1,5 @@
 package cn.edu.fudan.stringast.test;
 
-import cn.edu.fudan.baseast.algorithm.Algorithm;
 import cn.edu.fudan.stringast.algorithm.S_Algorithm;
 import cn.edu.fudan.stringast.structure.S_Operation;
 
@@ -36,7 +35,7 @@ public class S_Executor extends Thread{
     public void run() {
         while(true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
                 executeRemoteOperation();
             } catch (InterruptedException e) {
                 e.printStackTrace();

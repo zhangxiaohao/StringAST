@@ -1,12 +1,12 @@
 package cn.edu.fudan.stringast.algorithm;
 
-import cn.edu.fudan.baseast.structure.Operation;
 import cn.edu.fudan.baseast.structure.OperationRelationship;
 import cn.edu.fudan.baseast.structure.OperationType;
+import cn.edu.fudan.baseast.structure.TimeStamp;
+import cn.edu.fudan.stringast.Timer;
 import cn.edu.fudan.stringast.structure.S_Node;
 import cn.edu.fudan.stringast.structure.S_Operation;
 import cn.edu.fudan.stringast.structure.S_TimeStamp;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_OVERLAYPeer;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -20,6 +20,7 @@ public class S_Algorithm {
     public ArrayList<S_Node> document;
     public ConcurrentLinkedQueue<S_Operation> inQueue;
     public ConcurrentLinkedQueue<S_Operation> outQueue;
+    public long timeSpend;
 
     public S_Algorithm(int siteNum, int Num) {
         outQueue = new ConcurrentLinkedQueue<S_Operation>();
@@ -27,6 +28,7 @@ public class S_Algorithm {
         document = new ArrayList<S_Node>();
         effectLength = 0;
         s_timeStamp = new S_TimeStamp(siteNum, Num);
+        timeSpend = 0;
     }
 
     /**
@@ -134,6 +136,7 @@ public class S_Algorithm {
      * @param s_operation
      */
     public void execute(S_Operation s_operation) {
+        long start = Timer.now();
         int cnt = 0, pos = 0;
         if(s_operation.getPosition() == 0 && s_operation.getOperationType() == OperationType.INSERT) {
             rangescan(-1, 0, s_operation);
@@ -153,6 +156,7 @@ public class S_Algorithm {
             pos ++;
         }
         getEffectLength();
+        timeSpend += Timer.now() - start;
     }
 
     /**

@@ -1,11 +1,9 @@
 package cn.edu.fudan.stringast.test;
 
-import cn.edu.fudan.baseast.structure.Operation;
 import cn.edu.fudan.baseast.structure.OperationType;
 import cn.edu.fudan.stringast.algorithm.S_Algorithm;
 import cn.edu.fudan.stringast.structure.S_Operation;
 import cn.edu.fudan.stringast.structure.S_TimeStamp;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.Random;
 
@@ -16,6 +14,7 @@ public class S_Generator extends Thread{
     S_Algorithm s_algorithm;
     Integer Number;
     private String alpha = "abcdefghijklmnopqrstuvwxyz";
+    public int operationNum = 0;
 
     public S_Generator(S_Algorithm s_algorithm, Integer Number) {
         this.s_algorithm = s_algorithm;
@@ -40,7 +39,7 @@ public class S_Generator extends Thread{
         int position = 0, length = 0;
         if(operationType == OperationType.INSERT) {
             position = new Random().nextInt(this.s_algorithm.effectLength + 1);
-            length = new Random().nextInt(5) + 2;
+            length = new Random().nextInt(5) + 20;
         }else if(operationType == OperationType.DELETE) {
             position = new Random().nextInt(this.s_algorithm.effectLength) + 1;
             length = new Random().nextInt(this.s_algorithm.effectLength - position + 1) + 1;
@@ -51,6 +50,7 @@ public class S_Generator extends Thread{
         StringBuilder randomString = getRandomString(length);
         S_Operation s_operation = new S_Operation(new S_TimeStamp(this.s_algorithm.s_timeStamp), randomString, operationType, position, length);
         s_operation.print();
+        operationNum += length;
         s_algorithm.execute(s_operation);
         s_algorithm.outQueue.add(s_operation);
     }

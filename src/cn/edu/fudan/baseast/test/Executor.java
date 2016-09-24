@@ -3,7 +3,6 @@ package cn.edu.fudan.baseast.test;
 import cn.edu.fudan.baseast.algorithm.Algorithm;
 import cn.edu.fudan.baseast.structure.Operation;
 
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -38,7 +37,7 @@ public class Executor extends Thread{
     public void run() {
         while(true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
                 executeRemoteOperation();
             } catch (InterruptedException e) {}
         }

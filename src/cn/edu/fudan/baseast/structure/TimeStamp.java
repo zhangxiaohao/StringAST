@@ -1,9 +1,6 @@
 package cn.edu.fudan.baseast.structure;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by zhangxiaohao on 16/9/14.

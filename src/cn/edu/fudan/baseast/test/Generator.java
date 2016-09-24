@@ -26,7 +26,7 @@ public class Generator extends Thread{
         System.out.println("Operation has been execute!");
         int operationType = OperationType.INSERT;
         if(this.algorithm.effectLength > 0) {
-            operationType = Math.random() > 0.5 ? OperationType.INSERT : OperationType.DELETE;
+            operationType = Math.random() > 0.2 ? OperationType.INSERT : OperationType.DELETE;
         }
         int position = 0;
         if(operationType == OperationType.INSERT) {
@@ -38,7 +38,7 @@ public class Generator extends Thread{
         System.out.println(algorithm.timeStamp.timeStamp.size());
         int old = algorithm.timeStamp.timeStamp.get(algorithm.timeStamp.getSiteNumber());
         algorithm.timeStamp.timeStamp.set(algorithm.timeStamp.getSiteNumber(), old + 1);
-        Operation operation = new Operation(this.algorithm.timeStamp, alpha.substring(pos, pos + 1), operationType, position);
+        Operation operation = new Operation(this.algorithm.timeStamp, new StringBuilder(alpha.substring(pos, pos + 1)), operationType, position);
         operation.setTimeStamp(new TimeStamp(algorithm.timeStamp));
         operation.print();
         algorithm.execute(operation);

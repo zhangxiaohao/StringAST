@@ -15,8 +15,8 @@ public class StringASTTest {
     public static ArrayList<S_Generator> s_generators = new ArrayList<S_Generator>();
     public static ArrayList<S_Executor> s_executors = new ArrayList<S_Executor>();
     public static ArrayList<S_Sender> s_senders = new ArrayList<S_Sender>();
-    public static final int SITE = 100;
-    public static final int OPNUM = 10;
+    public static final int SITE = 2;
+    public static final int OPNUM = 3500;
 
     public static void run() throws InterruptedException {
         Thread.sleep(5000);
@@ -30,7 +30,7 @@ public class StringASTTest {
             s_executors.add(new S_Executor(s_algorithms.get(i)));
             s_executors.get(i).start();
         }
-        Thread.sleep(20000);
+        Thread.sleep(10000);
         int opnum = 0;
         for(int i=0; i<SITE; i++) {
             opnum += s_generators.get(i).operationNum;
@@ -41,7 +41,7 @@ public class StringASTTest {
         long sum = 0;
         for(S_Algorithm s_algorithm : s_algorithms) {
             sum += s_algorithm.timeSpend;
-            //s_algorithm.printModel();
+            s_algorithm.printModel();
             //s_algorithm.printModelinDetail();
             //System.out.println("***-------------------------------***");
         }

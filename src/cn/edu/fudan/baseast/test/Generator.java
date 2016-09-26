@@ -26,7 +26,7 @@ public class Generator extends Thread{
         System.out.println("Operation has been execute!");
         int operationType = OperationType.INSERT;
         if(this.algorithm.effectLength > 0) {
-            operationType = Math.random() > 0.2 ? OperationType.INSERT : OperationType.DELETE;
+            operationType = Math.random() > 0.5 ? OperationType.INSERT : OperationType.DELETE;
         }
         int position = 0;
         if(operationType == OperationType.INSERT) {
@@ -46,13 +46,17 @@ public class Generator extends Thread{
     }
 
     public void run() {
-        for(int i=0; i<Number; i++) {
-            executeOperation();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        try {
+            int C = 1;
+            while(C -- != 0) {
+                for(int i=0; i<Number; i++) {
+                    executeOperation();
+                }
+                Thread.sleep(2000);
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
     }
 }

@@ -39,12 +39,11 @@ public class S_Generator extends Thread{
         int position = 0, length = 0;
         if(operationType == OperationType.INSERT) {
             position = new Random().nextInt(this.s_algorithm.effectLength + 1);
-            length = new Random().nextInt(5) + 20;
+            length = new Random().nextInt(1) + 1;
         }else if(operationType == OperationType.DELETE) {
             position = new Random().nextInt(this.s_algorithm.effectLength) + 1;
-            length = new Random().nextInt(this.s_algorithm.effectLength - position + 1) + 1;
+            length = 1;//new Random().nextInt(this.s_algorithm.effectLength - position + 1) + 1;
         }
-        System.out.println(s_algorithm.s_timeStamp.timeStamp.size());
         int old = s_algorithm.s_timeStamp.timeStamp.get(s_algorithm.s_timeStamp.getSiteNumber());
         s_algorithm.s_timeStamp.timeStamp.set(s_algorithm.s_timeStamp.getSiteNumber(), old + 1);
         StringBuilder randomString = getRandomString(length);
@@ -56,13 +55,15 @@ public class S_Generator extends Thread{
     }
 
     public void run() {
-        for(int i=0; i<Number; i++) {
-            executeOperatoin();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        try {
+            int C = 1;
+            while(C -- != 0) {
+                for(int i=0; i<Number; i++) {
+                    executeOperatoin();
+                }
+                Thread.sleep(5000);
             }
+        } catch (InterruptedException e) {
         }
     }
 }

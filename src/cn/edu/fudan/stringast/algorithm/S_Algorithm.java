@@ -10,6 +10,8 @@ import cn.edu.fudan.stringast.structure.S_TimeStamp;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by zhangxiaohao on 2016/9/21.
@@ -72,11 +74,11 @@ public class S_Algorithm {
         for(i=pos + 1; i<document.size(); i++) {
             S_Node s_node = document.get(i);
             if(s_node.isEffect(s_operation)) {
-                p = i;
+                if(p == -1) p = i;
                 break;
             }
             if(s_node.getInsertOperation().getOperationRelationShip(s_operation) == OperationRelationship.CAUSAL) {
-                p = i;
+                if(p == -1) p = i;
                 break;
             }else {
                 if(p == -1 && s_node.getInsertOperation().getS_timeStamp().getTotalOrderRelationship(s_operation.getS_timeStamp()) == 1) {
@@ -114,8 +116,8 @@ public class S_Algorithm {
                 int tpos = document.get(i).operationString.length() - (cnt - s_operation.getLength());
                 if(tpos != document.get(i).operationString.length()) {
                     ArrayList<S_Node> nodes = document.get(i).split(tpos);
-                    document.remove(pos);
-                    document.addAll(pos, nodes);
+                    document.remove(i);
+                    document.addAll(i, nodes);
                 }
                 break;
             }

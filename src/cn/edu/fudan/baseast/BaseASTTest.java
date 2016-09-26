@@ -16,8 +16,8 @@ public class BaseASTTest {
     public static ArrayList<Generator> generators = new ArrayList<Generator>();
     public static ArrayList<Executor> executors = new ArrayList<Executor>();
     public static ArrayList<Sender> senders = new ArrayList<Sender>();
-    public static final int SITE = 100;
-    public static final int OPNUM = 175;
+    public static final int SITE = 2;
+    public static final int OPNUM = 3506;
 
     public static void out() {
         Algorithm algorithm = algorithms.get(0);
@@ -48,7 +48,7 @@ public class BaseASTTest {
         }
         long sum = 0;
         for(Algorithm algorithm : algorithms) {
-//            algorithm.printModel();
+            algorithm.printModel();
 //            algorithm.printModelinDetail();
 //            System.out.println("/n-----------------------------/n");
             sum += algorithm.timeSpend;

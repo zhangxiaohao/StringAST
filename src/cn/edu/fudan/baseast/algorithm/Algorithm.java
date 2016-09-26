@@ -58,19 +58,18 @@ public class Algorithm {
         for(i=pos; i<document.size(); i++) {
             Node node = document.get(i);
             if(node.isEffect(operation)) {
-                p = i;
+                if(p == -1) p = i;
                 break;
             }
             if(node.getInsertOperation().getOperationRelationship(operation) == OperationRelationship.CAUSAL) {
-                p = i;
+                if(p == -1) p = i;
                 break;
             }else {
                 if(p == -1 && node.getInsertOperation().getTimeStamp().getTotalOrderRelationship(operation.getTimeStamp()) == 1) {
                     p = i;
-                    //System.out.println("site " + this.timeStamp.getSiteNumber() + "! xx p = " + i);
                 }
                 if(p != -1 && node.getInsertOperation().getTimeStamp().getTotalOrderRelationship(operation.getTimeStamp()) == 0
-                   && node.getInsertOperation().getOperationRelationship(document.get(i).getInsertOperation()) == OperationRelationship.CAUSAL){
+                   && node.getInsertOperation().getOperationRelationship(document.get(p).getInsertOperation()) == OperationRelationship.CAUSAL){
                     p = -1;
                 }
             }
